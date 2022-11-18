@@ -19,5 +19,7 @@ WITH
   )
 
 SELECT 
-  *
+  product_key
+  , product_name
+  , brand_name
 FROM dim_product__cast_type
