@@ -26,7 +26,7 @@ WITH fact_sales_order_line__source AS (
 , fact_sales_order_line__calculate_measure AS (
   SELECT
     *
-    , CAST(quantity AS INTEGER) * CAST(unit_price AS NUMERIC) AS gross_amount
+    , quantity * unit_price AS gross_amount
   FROM 
     fact_sales_order_line__cast_type
 )
