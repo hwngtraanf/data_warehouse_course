@@ -13,16 +13,24 @@ WITH fact_sales_order_line__source AS (
     fact_sales_order_line__source
 )
 
-, fact_sales_order_line__calculate_gross_cast_type AS (
+, fact_sales_order_line__cast_type AS (
   SELECT 
     CAST(sales_order_line_key AS INTEGER) AS sales_order_line_key
     , CAST(product_key AS INTEGER) AS product_key
     , CAST(quantity AS INTEGER) AS quantity
     , CAST(unit_price AS NUMERIC) AS unit_price
-    , CAST(quantity AS INTEGER) * CAST(unit_price AS NUMERIC) AS gross_amount
   FROM 
     fact_sales_order_line__rename_column
 )
+
+, fact_sales_order_line__calculate_measure AS (
+  SELECT
+    *
+    , CAST(quantity AS INTEGER) * CAST(unit_price AS NUMERIC) AS gross_amount
+  FROM 
+    fact_sales_order_line__cast_type
+)
+
 
 SELECT 
   sales_order_line_key
@@ -30,4 +38,4 @@ SELECT
   , quantity
   , unit_price
   , gross_amount
-FROM fact_sales_order_line__calculate_gross_cast_type
+FROM fact_sales_order_line__calculate_measure
