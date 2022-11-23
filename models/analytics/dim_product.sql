@@ -20,18 +20,20 @@ WITH
       , CAST(supplier_key AS INTEGER) AS supplier_key
       , CAST(product_name AS STRING) AS product_name
       , CAST(brand_name AS STRING) AS brand_name
-      , CAST(is_chiller_stock AS BOOLEAN) AS is_chiller_stock
+      , CAST(is_chiller_stock AS BOOLEAN) AS is_chiller_stock_boolean
     FROM dim_product__rename_column
   )
 
-  , dim_product__convert_meaning AS (
+  , dim_product__convert_boolean AS (
     SELECT 
       dim_product.*
       , CASE 
-          WHEN is_chiller_stock is true
+          WHEN is_chiller_stock_boolean is TRUE
             THEN 'Chiller Stock'
-          ELSE 'Not Chiller Stock' 
-      END AS is_chiller_stock_meaning
+          WHEN is_chiller_stock_boolean is FALSE 
+            THEN 'Not Chiller Stock' 
+          ELSE 'Undefined' END
+      AS is_chiller_stock
     FROM dim_product__cast_type dim_product
   )
 
@@ -39,8 +41,8 @@ WITH
       SELECT
         dim_product.*
         , dim_supplier.supplier_name
-      FROM dim_product__convert_meaning dim_product
-      LEFT JOIN {{ ref('dim_supplier') }} dim_supplier
+      FROM dim_product__convert_boolean dim_product
+      LEFT JOIN `tpp-learning`.`wide_world_importers_dwh`.`dim_supplier` dim_supplier
       ON dim_product.supplier_key = dim_supplier.supplier_key
 )
 
@@ -50,5 +52,5 @@ SELECT
   , product_name
   , supplier_name
   , brand_name
-  , is_chiller_stock_meaning
+  , is_chiller_stock
 FROM dim_product__join_dim_supplier
