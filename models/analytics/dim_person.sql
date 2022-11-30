@@ -21,5 +21,11 @@ WITH dim_person__source AS (
 
 SELECT 
   person_key
-  , full_name
+  , COALESCE(full_name, "Undefined") AS full_name
 FROM dim_person__cast_type
+
+UNION ALL 
+
+SELECT 
+  0 AS person_key
+  , "Undefined" AS full_name
