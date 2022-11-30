@@ -24,6 +24,16 @@ WITH
     FROM dim_product__rename_column
   )
 
+  , dim_product__handle_null AS (
+    SELECT
+      product_key
+      , supplier_key
+      , COALESCE(product_name, 'Undefined') AS product_name
+      , COALESCE(brand_name, 'Undefined') AS brand_name
+      , is_chiller_stock_boolean
+    FROM dim_product__cast_type
+  )
+
   , dim_product__convert_boolean AS (
     SELECT 
       dim_product.*
@@ -34,13 +44,13 @@ WITH
             THEN 'Not Chiller Stock' 
           ELSE 'Undefined' END
       AS is_chiller_stock
-    FROM dim_product__cast_type dim_product
+    FROM dim_product__handle_null dim_product
   )
 
   , dim_product__join_dim_supplier AS (
       SELECT
         dim_product.*
-        , dim_supplier.supplier_name
+        , COALESCE(dim_supplier.supplier_name, 'Undefined') AS supplier_name
       FROM dim_product__convert_boolean dim_product
       LEFT JOIN `tpp-learning`.`wide_world_importers_dwh`.`dim_supplier` dim_supplier
       ON dim_product.supplier_key = dim_supplier.supplier_key
