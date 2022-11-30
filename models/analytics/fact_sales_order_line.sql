@@ -37,7 +37,8 @@ WITH fact_sales_order_line__source AS (
   SELECT
     fact_line.*
     , fact_header.customer_key
-    , fact_header.picked_by_person_key
+    , COALESCE(fact_header.picked_by_person_key, -1) AS picked_by_person_key
+    , fact_header.order_date
   FROM fact_sales_order_line__calculate_measure fact_line
   LEFT JOIN {{ ref('stg_fact_sales_order') }} fact_header
   ON fact_line.sales_order_key = fact_header.sales_order_key
@@ -49,6 +50,7 @@ SELECT
   , customer_key
   , product_key
   , picked_by_person_key
+  , order_date
   , quantity
   , unit_price
   , gross_amount
