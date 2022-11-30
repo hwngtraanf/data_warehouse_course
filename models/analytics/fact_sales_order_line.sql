@@ -37,6 +37,7 @@ WITH fact_sales_order_line__source AS (
   SELECT
     fact_line.*
     , fact_header.customer_key
+    , fact_header.picked_by_person_key
   FROM fact_sales_order_line__calculate_measure fact_line
   LEFT JOIN {{ ref('stg_fact_sales_order') }} fact_header
   ON fact_line.sales_order_key = fact_header.sales_order_key
@@ -47,6 +48,7 @@ SELECT
   , sales_order_key
   , customer_key
   , product_key
+  , picked_by_person_key
   , quantity
   , unit_price
   , gross_amount
