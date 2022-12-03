@@ -50,8 +50,8 @@ SELECT
   , customer_key
   , product_key
   , picked_by_person_key
-  , order_date
   , quantity
   , unit_price
   , gross_amount
+  , order_date
 FROM fact_sales_order_line__join_stg_fact_sales_order

@@ -66,8 +66,8 @@ SELECT
   customer_key
   , customer_name
   , customer_category_key
-  , customer_category_name
   , buying_group_key
+  , customer_category_name
   , buying_group_name
   , is_on_credit_hold
 FROM dim_customer__flatten
