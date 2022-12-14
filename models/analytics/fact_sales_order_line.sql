@@ -46,7 +46,7 @@
   , fact_sales_order_line__join_stg_fact_sales_order AS (
     SELECT
       fact_line.*
-      , CONCAT(fact_header.is_undersupply_backordered, ',', fact_line.package_type_key) AS sales_order_line_indicator_key
+      , FARM_FINGERPRINT(CONCAT(CAST(fact_header.is_undersupply_backordered AS STRING), ',', CAST(fact_line.package_type_key AS STRING))) AS sales_order_line_indicator_key
       , fact_header.customer_key
       , COALESCE(fact_header.salesperson_person_key, -1) AS salesperson_person_key
       , COALESCE(fact_header.picked_by_person_key, -1) AS picked_by_person_key
