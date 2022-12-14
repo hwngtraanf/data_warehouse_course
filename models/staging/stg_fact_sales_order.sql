@@ -52,13 +52,14 @@ SELECT
   , order_date
   , expected_delivery_date
   , customer_purchase_order_number
-  , CASE 
-          WHEN is_undersupply_backordered_boolean is TRUE
-            THEN 'Undersupply Backordered'
-          WHEN is_undersupply_backordered_boolean is FALSE 
-            THEN 'Not Undersupply Backordered' 
-          ELSE 'Undefined' END
-      AS is_undersupply_backordered
+  -- , CASE 
+  --         WHEN is_undersupply_backordered_boolean is TRUE
+  --           THEN 'Undersupply Backordered'
+  --         WHEN is_undersupply_backordered_boolean is FALSE 
+  --           THEN 'Not Undersupply Backordered' 
+  --         ELSE 'Undefined' END
+  --     AS is_undersupply_backordered
+  , is_undersupply_backordered_boolean AS is_undersupply_backordered
   , COALESCE(comments, 'Undefined') AS comments
   , COALESCE(delivery_instructions, 'Undefined') AS delivery_instructions
   , COALESCE(internal_comments, 'Undefined') AS internal_comments

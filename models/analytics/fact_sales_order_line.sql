@@ -46,6 +46,7 @@
   , fact_sales_order_line__join_stg_fact_sales_order AS (
     SELECT
       fact_line.*
+      , CONCAT(fact_header.is_undersupply_backordered, ',', fact_line.package_type_key) AS sales_order_line_indicator_key
       , fact_header.customer_key
       , COALESCE(fact_header.salesperson_person_key, -1) AS salesperson_person_key
       , COALESCE(fact_header.picked_by_person_key, -1) AS picked_by_person_key
@@ -67,17 +68,18 @@
     sales_order_line_key
     , description
     , sales_order_key
+    , sales_order_line_indicator_key
     , customer_key
     , product_key
     , salesperson_person_key
     , picked_by_person_key
     , contact_person_key
     , backorder_order_key
-    , package_type_key
+    -- , package_type_key
     , order_date
     , expected_delivery_date
     , customer_purchase_order_number
-    , is_undersupply_backordered
+    -- , is_undersupply_backordered
     , comments
     , delivery_instructions
     , internal_comments
