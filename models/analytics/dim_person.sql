@@ -99,37 +99,37 @@ UNION ALL
 SELECT 
   0 AS person_key
   , "Undefined" AS full_name
+  , "Undefined"
+  , "Undefined"
+  , "Undefined"
   , NULL
+  , "Undefined"
+  , "Undefined"
+  , "Undefined"
+  , "Undefined"
+  , "Undefined"
+  , "Undefined"
+  , "Undefined"
   , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
+  , "Undefined"
+  , "Undefined"
 
 UNION ALL
 
 SELECT 
   -1 AS person_key
   , "Error" AS full_name
+  , "Error"
+  , "Error"
+  , "Error"
   , NULL
+  , "Error"
+  , "Error"
+  , "Error"
+  , "Error"
+  , "Error"
+  , "Error"
+  , "Error"
   , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
-  , NULL
+  , "Error"
+  , "Error"
