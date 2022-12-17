@@ -10,12 +10,21 @@ models:
       - name: supplier_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_supplier')
+              field: supplier_key
       - name: unit_package_type_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_package_type')
+              field: package_type_key
       - name: outer_package_type_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_package_type')
+              field: package_type_key
       - name: product_name
         tests:
           - not_null

@@ -2,6 +2,9 @@ version: 2
 
 models: 
   - name: fact_sales_order_line
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: "`vit-lam-data.wide_world_importers.sales__order_lines`"
     columns: 
       - name: sales_order_line_key
         tests:
@@ -13,34 +16,73 @@ models:
       - name: sales_order_key
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_fact_sales_order')
+              field: sales_order_key
       - name: sales_order_line_indicator_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_sales_order_line_indicator')
+              field: sales_order_line_indicator_key
       - name: customer_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_key
       - name: product_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
       - name: salesperson_person_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_person')
+              field: person_key
       - name: picked_by_person_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_person')
+              field: person_key
       - name: contact_person_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_person')
+              field: person_key
       - name: order_date
         tests:
           - not_null
       - name: quantity
         tests:
           - not_null
+          - custom_test_equal_sum:
+              compare_model: "`vit-lam-data.wide_world_importers.sales__order_lines`"
+              compare_column: quantity
+      - name: unit_price
+        tests:
+          - custom_test_equal_sum:
+              compare_model: "`vit-lam-data.wide_world_importers.sales__order_lines`"
+              compare_column: unit_price
       - name: tax_rate
         tests:
           - not_null
+          - custom_test_equal_sum:
+              compare_model: "`vit-lam-data.wide_world_importers.sales__order_lines`"
+              compare_column: tax_rate
       - name: picked_quantity
         tests:
           - not_null
+          - custom_test_equal_sum:
+              compare_model: "`vit-lam-data.wide_world_importers.sales__order_lines`"
+              compare_column: picked_quantity
+      - name: gross_amount
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: " = unit_price * quantity"
       

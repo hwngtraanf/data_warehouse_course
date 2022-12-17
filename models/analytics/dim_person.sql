@@ -61,7 +61,7 @@ SELECT
         THEN 'Permitted To Login'
       WHEN is_permitted_to_logon_boolean is FALSE 
         THEN 'Not Permitted To Login' 
-      ELSE 'Undefined' END
+      ELSE 'Invalid' END
   AS is_permitted_to_logon
   , hashed_password
   , CASE 
@@ -69,21 +69,21 @@ SELECT
         THEN 'System User'
       WHEN is_system_user_boolean is FALSE 
         THEN 'Not System User' 
-      ELSE 'Undefined' END
+      ELSE 'Invalid' END
   AS is_system_user
   , CASE 
       WHEN is_employee_boolean is TRUE
         THEN 'Employee'
       WHEN is_employee_boolean is FALSE 
         THEN 'Not Employee' 
-      ELSE 'Undefined' END
+      ELSE 'Invalid' END
   AS is_employee
   , CASE 
       WHEN is_salesperson_boolean is TRUE
         THEN 'Salesperson'
       WHEN is_salesperson_boolean is FALSE 
         THEN 'Not Salesperson' 
-      ELSE 'Undefined' END
+      ELSE 'Invalid' END
   AS is_salesperson
   , COALESCE(user_preferences, "Undefined") AS user_preferences
   , COALESCE(phone_number, "Undefined") AS phone_number

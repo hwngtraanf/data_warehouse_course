@@ -93,7 +93,7 @@ WITH
             THEN 'Chiller Stock'
           WHEN is_chiller_stock_boolean is FALSE 
             THEN 'Not Chiller Stock' 
-          ELSE 'Undefined' END
+          ELSE 'Invalid' END
       AS is_chiller_stock
     FROM dim_product__handle_null dim_product
   )
