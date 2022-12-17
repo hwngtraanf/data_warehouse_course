@@ -6,6 +6,7 @@ models:
       - name: customer_key
         tests:
           - not_null
+          - unique
       - name: customer_name
         tests:
           - not_null
@@ -61,5 +62,38 @@ models:
         tests:
           - not_null
       - name: postal_city_key
+        tests:
+          - not_null
+      - name: primary_contact_person_name
+        tests:
+          - not_null
+      - name: bill_to_customer_name
+        tests:
+          - not_null
+      - name: delivery_method_name
+        tests:
+          - not_null
+      - name: delivery_city_name
+        tests:
+          - not_null
+      - name: delivery_state_province_name
+        tests:
+          - not_null
+      - name: postal_city_name
+        tests:
+          - not_null
+      - name: delivery_address_line_2
+        tests:
+          - not_null
+      - name: postal_address_line_2
+        tests:
+          - not_null
+      - name: customer_category_name
+        tests:
+          - not_null
+      - name: buying_group_name
+        tests:
+          - not_null
+      - name: alternate_contact_person_name
         tests:
           - not_null
