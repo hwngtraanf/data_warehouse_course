@@ -29,12 +29,12 @@ SELECT
       WHEN lifetime_monetary BETWEEN 0.5 AND 0.8 THEN 'Medium'
       WHEN lifetime_monetary BETWEEN 0 AND 0.5 THEN 'Low'
       ELSE 'Error'
-    END AS lifetime_monetary
+    END AS lifetime_monetary_segment
   , last_month_sale_amount
   , CASE 
       WHEN last_month_monetary BETWEEN 0.8 AND 1 THEN 'High'
       WHEN last_month_monetary BETWEEN 0.5 AND 0.8 THEN 'Medium'
       WHEN last_month_monetary BETWEEN 0 AND 0.5 THEN 'Low'
       ELSE 'Error'
-    END AS last_month_monetary
+    END AS last_month_monetary_segment
 FROM total_spend_percentile
