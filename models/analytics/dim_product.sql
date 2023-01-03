@@ -101,6 +101,10 @@ WITH
   , dim_product__flatten AS (
       SELECT
         dim_product.*
+        , CAST(dim_external_product.category_id AS INTEGER) AS category_key
+        , CAST(dim_external_category.category_name AS STRING) AS category_name
+        , CAST(dim_external_category.parent_category_id AS INTEGER) AS parent_category_key
+        , CAST(dim_external_category.category_level AS INTEGER) AS category_level
         , COALESCE(dim_supplier.supplier_name, 'Undefined') AS supplier_name
         , COALESCE(dim_color.color_name, 'Undefined') AS color_name
         , COALESCE(dim_unit_package_type.package_type_name, 'Undefined') AS unit_package_type_name
@@ -114,6 +118,10 @@ WITH
       ON dim_unit_package_type.package_type_key = dim_product.unit_package_type_key
       LEFT JOIN `tpp-learning`.`wide_world_importers_dwh`.`dim_package_type` dim_outer_package_type
       ON dim_outer_package_type.package_type_key = dim_product.outer_package_type_key
+      LEFT JOIN `vit-lam-data`.`wide_world_importers`.`external__stock_item` dim_external_product
+      ON dim_external_product.stock_item_id = dim_product.product_key
+      LEFT JOIN `vit-lam-data`.`wide_world_importers`.`external__categories` dim_external_category
+      ON dim_external_category.category_id = dim_external_product.category_id
 )
 
 SELECT 
@@ -135,6 +143,10 @@ SELECT
   , custom_fields 
   , tags 
   , search_details 
+  , category_key
+  , category_name
+  , category_level
+  , parent_category_key
   , supplier_key 
   , supplier_name 
   , color_key 
